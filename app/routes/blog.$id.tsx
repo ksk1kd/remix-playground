@@ -1,13 +1,25 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
+interface Blog {
+  id: string;
+  title: string;
+  content: string;
+}
+
 export async function loader({ params }: LoaderFunctionArgs) {
-  return {
-    id: params.id,
-  };
+  const response = await fetch(`https://api.vercel.app/blog/${params.id}`);
+  const json = await response.json();
+  return json;
 }
 
 export default function Blog() {
   const data = useLoaderData<typeof loader>();
-  return <h1>Blog {data.id}</h1>;
+
+  return (
+    <>
+      <h1>{data.title}</h1>
+      <article>{data.content}</article>
+    </>
+  );
 }

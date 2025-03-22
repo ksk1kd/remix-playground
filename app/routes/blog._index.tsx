@@ -1,25 +1,29 @@
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
+
+interface Blog {
+  id: string;
+  title: string;
+  content: string;
+}
+
+export async function loader() {
+  const response = await fetch("https://api.vercel.app/blog");
+  const json = await response.json();
+  return json;
+}
 
 export default function Blog() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <>
       <h1>Blog List</h1>
       <ul>
-        <li>
-          <Link to="/blog/1">Blog 1</Link>
-        </li>
-        <li>
-          <Link to="/blog/2">Blog 2</Link>
-        </li>
-        <li>
-          <Link to="/blog/3">Blog 3</Link>
-        </li>
-        <li>
-          <Link to="/blog/4">Blog 4</Link>
-        </li>
-        <li>
-          <Link to="/blog/5">Blog 5</Link>
-        </li>
+        {data.map((blog: Blog) => (
+          <li key={blog.id}>
+            <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
+          </li>
+        ))}
       </ul>
     </>
   );
