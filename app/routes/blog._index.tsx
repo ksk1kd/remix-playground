@@ -17,10 +17,10 @@ export default function Blog() {
 
   return (
     <>
-      <h1>Blog List</h1>
-      <ul>
+      <h1 className="text-4xl font-extrabold py-2">Blog List</h1>
+      <ul className="list-disc pl-4 py-5">
         {data.map((blog: Blog) => (
-          <li key={blog.id}>
+          <li className="py-1" key={blog.id}>
             <Link to={`/blog/${blog.id}`}>{blog.title}</Link>
           </li>
         ))}

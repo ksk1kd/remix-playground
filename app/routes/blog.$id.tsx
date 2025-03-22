@@ -18,8 +18,8 @@ export default function Blog() {
 
   return (
     <>
-      <h1>{data.title}</h1>
-      <article>{data.content}</article>
+      <h1 className="text-4xl font-extrabold py-2">{data.title}</h1>
+      <article className="py-5">{data.content}</article>
     </>
   );
 }
